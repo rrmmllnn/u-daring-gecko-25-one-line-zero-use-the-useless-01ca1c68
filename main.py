@@ -1,25 +1,26 @@
 #!/usr/bin/env python3
-"""One Line, Zero Use: The Useless Superpower Sprint.
+"""Useless superpower, one line only.
 
-Writes a single original one-liner (under 200 characters) naming a
-hilariously useless superpower to /output/entry.txt.
+Produces a single original one-liner (at most 200 characters) that names
+a gloriously pointless superpower, and saves it to /output/entry.txt.
 """
 
-import os
+from pathlib import Path
 
-LINE = (
-    "I can talk to animals \u2014 but only goldfish, "
-    "and they only ever want to discuss the same castle."
-)
+POWER = "I can stop time — but only for houseflies, and only while they are already asleep."
+
+OUT = Path("/output/entry.txt")
 
 
-def main() -> None:
-    assert 1 <= len(LINE) <= 200, f"line is {len(LINE)} chars"
-    assert LINE.strip(), "line must not be only whitespace"
-    os.makedirs("/output", exist_ok=True)
-    with open("/output/entry.txt", "w", encoding="utf-8") as f:
-        f.write(LINE)
+def run() -> None:
+    size = len(POWER)
+    if not 1 <= size <= 200:
+        raise ValueError(f"one-liner must be 1-200 chars, got {size}")
+    if not POWER.strip():
+        raise ValueError("one-liner must not be blank")
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    OUT.write_text(POWER, encoding="utf-8")
 
 
 if __name__ == "__main__":
-    main()
+    run()
